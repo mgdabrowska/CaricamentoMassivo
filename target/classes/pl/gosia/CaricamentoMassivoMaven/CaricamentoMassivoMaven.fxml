@@ -8,7 +8,7 @@
 <AnchorPane fx:id="anchorPane" prefHeight="685.0" prefWidth="516.0" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="pl.gosia.CaricamentoMassivoMaven.Controler">
    <children>
       <Button layoutX="335.0" layoutY="61.0" mnemonicParsing="false" onAction="#locateFile" prefHeight="103.0" prefWidth="107.0" text="ZNAJDZ PLIK" />
-       <TextField layoutX="230.0" layoutY="46.0" onKeyReleased="#validate" prefHeight="25.0" prefWidth="38.0" />
+      <TextField layoutX="230.0" layoutY="46.0" onKeyReleased="#validate" prefHeight="25.0" prefWidth="38.0" />
       <TextField layoutX="230.0" layoutY="86.0" onKeyReleased="#validate" prefHeight="25.0" prefWidth="38.0" />
       <TextField layoutX="230.0" layoutY="126.0" onKeyReleased="#validate" prefHeight="25.0" prefWidth="38.0" />
       <TextField layoutX="230.0" layoutY="166.0" onKeyReleased="#validate" prefHeight="25.0" prefWidth="38.0" />

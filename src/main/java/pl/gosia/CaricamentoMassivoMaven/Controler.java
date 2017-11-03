@@ -10,7 +10,6 @@ import java.io.Writer;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
-
 import org.apache.poi.xssf.usermodel.XSSFWorkbook;
 import java.util.Iterator;
 import java.util.LinkedHashSet;
@@ -39,25 +38,22 @@ public class Controler {
 
 	@FXML
 	private static String FILE_NAME = "";
-@FXML
-	 LinkedHashSet<String> set=new LinkedHashSet<String>();
-	 
+	private LinkedHashSet<String> set;
+
 	@FXML
 	private void validate(KeyEvent event1) {
 		Main majority = new Main();
-		 //SortedSet<String> set = new TreeSet<String>();
-		
-		//SortedSet<String> set = new SortedList<String>();
+		set = new LinkedHashSet<String>();
 		for (Node node : anchorPane.getChildren()) {
 
 			if (node instanceof TextField && ((TextField) node).getText().length() == 1
 					&& ((TextField) node).getText().matches("[a-n]|[0]")) {
-				if(!set.contains(((TextField) node).getText())||(((TextField) node).getText().matches("[0]"))){
+				if (!set.contains(((TextField) node).getText()) || (((TextField) node).getText().matches("[0]"))) {
 
-				set.add(((TextField) node).getText());
-				System.out.println(set + " set");
+					set.add(((TextField) node).getText());
+					System.out.println(set + " set");
 
-				}else{
+				} else {
 					((TextField) node).setText("");
 
 				}
@@ -87,14 +83,12 @@ public class Controler {
 		}
 
 	}
-	 private static void configureFileChooser(final FileChooser fileChooser) {
 
-		            fileChooser.getExtensionFilters().addAll(
-		                new FileChooser.ExtensionFilter("All Text", "*.*"),
-		                new FileChooser.ExtensionFilter("Excel", "*.xls"),
-		                new FileChooser.ExtensionFilter("Excel", "*.xlsx")
-		            );
-		    }
+	private static void configureFileChooser(final FileChooser fileChooser) {
+
+		fileChooser.getExtensionFilters().addAll(new FileChooser.ExtensionFilter("All Text", "*.*"),
+				new FileChooser.ExtensionFilter("Excel", "*.xls"), new FileChooser.ExtensionFilter("Excel", "*.xlsx"));
+	}
 
 	private void openFile(File file) {
 		try {
@@ -105,20 +99,24 @@ public class Controler {
 
 	}
 
+	public void readFile() {
 
-	public  void readFile(){
+		/*
+		 * for (Node node : anchorPane.getChildren()) { //
+		 * System.out.println("Id: " + node.getId()); if (node instanceof
+		 * TextField) { // clear System.out.print(((TextField)node).getText());
+		 * }
+		 *
+		 *
+		 * } System.out.println("wypisuje seta  " + set);
+		 */
 
-
-System.out.println(set + " wypisz wszystkoie");
-
-
-
-	/*	Writer writer = null;
+		Writer writer = null;
 		try {
 
-           // FileInputStream excelFile = new FileInputStream(new File());
+			// FileInputStream excelFile = new FileInputStream(new File());
 			System.out.println(FILE_NAME);
-    		InputStream file = new BufferedInputStream(new FileInputStream(new File(FILE_NAME)));
+			InputStream file = new BufferedInputStream(new FileInputStream(new File(FILE_NAME)));
 
 			Workbook workbook = new XSSFWorkbook(file);
 			org.apache.poi.ss.usermodel.Sheet sheet = workbook.getSheetAt(0);
@@ -130,26 +128,29 @@ System.out.println(set + " wypisz wszystkoie");
 
 			while (rowIterator.hasNext()) {
 				Row row = rowIterator.next();
-				Iterator<Cell> cellIterator = row.iterator();
-				//writer.write("");
+				if (row.getRowNum() >= 1) {
+					Iterator<Cell> cellIterator = row.iterator();
+					// writer.write("");
 
-				while (cellIterator.hasNext()) {
-					Cell cell = cellIterator.next();
-					if (cell.getCellTypeEnum() == CellType.STRING) {
-						System.out.print(cell.getStringCellValue() + "\t");
-						writer.write("" + String.valueOf(cell.getStringCellValue()));
-					} else if (cell.getCellTypeEnum() == CellType.NUMERIC) {
-						System.out.print(cell.getNumericCellValue() + "\t");
-						writer.write("" + String.valueOf(cell.getNumericCellValue()));
+					while (cellIterator.hasNext()) {
+						Cell cell = cellIterator.next();
+
+						if (cell.getCellTypeEnum() == CellType.STRING) {
+							System.out.print(cell.getStringCellValue() + "\t");
+							writer.write("" + String.valueOf(cell.getStringCellValue()));
+						} else if (cell.getCellTypeEnum() == CellType.NUMERIC) {
+							System.out.print(cell.getNumericCellValue() + "\t");
+							writer.write("" + String.valueOf(cell.getNumericCellValue()));
+						}
+						writer.write("*");
+
 					}
-					writer.write("*");
 
+					writer.write("\r\n");
+					System.out.println("");
 				}
-
-				writer.write("\r\n");
-				System.out.println("");
+				file.close();
 			}
-			file.close();
 		} catch (IOException e) {
 
 			e.printStackTrace();
@@ -162,7 +163,5 @@ System.out.println(set + " wypisz wszystkoie");
 				ex.printStackTrace();
 			}
 		}
-*/
 	}
-
 }
