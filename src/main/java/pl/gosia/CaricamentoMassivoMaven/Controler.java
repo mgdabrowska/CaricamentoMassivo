@@ -25,6 +25,8 @@ import javafx.scene.input.KeyEvent;
 import javafx.scene.layout.AnchorPane;
 import javafx.stage.FileChooser;
 import javafx.stage.Window;
+
+import org.apache.poi.hssf.util.CellReference;
 import org.apache.poi.ss.usermodel.Cell;
 import org.apache.poi.ss.usermodel.CellType;
 import org.apache.poi.ss.usermodel.Row;
@@ -133,10 +135,15 @@ public class Controler {
 					// writer.write("");
 
 					while (cellIterator.hasNext()) {
-						Cell cell = cellIterator.next();
+						Cell cell = null;
+						for (String value: set) {
+						int i = CellReference.convertColStringToIndex(value);
+
+							cell = row.getCell(i);
 
 						if (cell.getCellTypeEnum() == CellType.STRING) {
 							System.out.print(cell.getStringCellValue() + "\t");
+
 							writer.write("" + String.valueOf(cell.getStringCellValue()));
 						} else if (cell.getCellTypeEnum() == CellType.NUMERIC) {
 							System.out.print(cell.getNumericCellValue() + "\t");
@@ -144,9 +151,10 @@ public class Controler {
 						}
 						writer.write("*");
 
-					}
 
 					writer.write("\r\n");
+						}
+					}
 					System.out.println("");
 				}
 				file.close();
