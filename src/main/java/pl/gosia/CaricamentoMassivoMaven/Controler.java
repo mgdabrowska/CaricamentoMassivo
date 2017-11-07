@@ -20,7 +20,6 @@ import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.scene.Node;
 import javafx.scene.control.TextField;
-import javafx.scene.control.TextInputControl;
 import javafx.scene.input.KeyEvent;
 import javafx.scene.layout.AnchorPane;
 import javafx.stage.FileChooser;
@@ -103,20 +102,9 @@ public class Controler {
 
 	public void readFile() {
 
-		/*
-		 * for (Node node : anchorPane.getChildren()) { //
-		 * System.out.println("Id: " + node.getId()); if (node instanceof
-		 * TextField) { // clear System.out.print(((TextField)node).getText());
-		 * }
-		 *
-		 *
-		 * } System.out.println("wypisuje seta  " + set);
-		 */
-
 		Writer writer = null;
 		try {
 
-			// FileInputStream excelFile = new FileInputStream(new File());
 			System.out.println(FILE_NAME);
 			InputStream file = new BufferedInputStream(new FileInputStream(new File(FILE_NAME)));
 
@@ -152,8 +140,9 @@ public class Controler {
 						writer.write("*");
 
 
-					writer.write("\r\n");
 						}
+						writer.write("\r\n");
+						break;
 					}
 					System.out.println("");
 				}
