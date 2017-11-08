@@ -124,11 +124,15 @@ public class Controler {
 
 					while (cellIterator.hasNext()) {
 						Cell cell = null;
+						int j =0;
 						for (String value: set) {
+							j++;
 						int i = CellReference.convertColStringToIndex(value);
-
+System.out.println(j+ " coś tam " + i);
 							cell = row.getCell(i);
-
+							if(cell.getStringCellValue().length()==5){
+							System.out.println("kolumn index ");
+							}
 						if (cell.getCellTypeEnum() == CellType.STRING) {
 							System.out.print(cell.getStringCellValue() + "\t");
 
@@ -159,6 +163,22 @@ public class Controler {
 			} catch (IOException ex) {
 				ex.printStackTrace();
 			}
+		}
+	}
+	
+	
+	
+	//nowa metoda z validacją 
+	public void validateCell( int i){
+		if(i == 1){
+			Cell cell = null;
+			if(cell.getStringCellValue().length()==5 && (cell.getCellTypeEnum()== CellType.STRING || cell.getCellTypeEnum() == CellType.NUMERIC))
+					{
+				System.out.println("POPRAWNA WARTOŚ");
+				}
+			
+				
+			
 		}
 	}
 }
