@@ -7,6 +7,8 @@ import java.io.File;
 import java.io.FileInputStream;
 import java.io.IOException;
 import java.io.Writer;
+import java.nio.file.DirectoryStream;
+import java.util.function.Function;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
@@ -40,6 +42,12 @@ public class Controler {
 	@FXML
 	private static String FILE_NAME = "";
 	private LinkedHashSet<String> set;
+
+	Validator[] validators = new Validator[]{
+			this::validateCell1,
+			this::validateCell1,
+			this::validateCell1,
+	};
 
 	@FXML
 	private void validate(KeyEvent event1) {
@@ -130,6 +138,7 @@ public class Controler {
 						int i = CellReference.convertColStringToIndex(value);
 System.out.println(j+ " coś tam " + i);
 							cell = row.getCell(i);
+							boolean apply = validators[i].apply(cell);
 							if(cell.getStringCellValue().length()==5){
 							System.out.println("kolumn index ");
 							}
@@ -169,16 +178,20 @@ System.out.println(j+ " coś tam " + i);
 	
 	
 	//nowa metoda z validacją 
-	public void validateCell( int i){
-		if(i == 1){
-			Cell cell = null;
+	public boolean validateCell1(Cell cell){
+
 			if(cell.getStringCellValue().length()==5 && (cell.getCellTypeEnum()== CellType.STRING || cell.getCellTypeEnum() == CellType.NUMERIC))
 					{
 				System.out.println("POPRAWNA WARTOŚ");
+				return true;
 				}
-			
+		return false;
 				
 			
-		}
+
+	}
+
+	interface Validator extends Function<Cell, Boolean> {
+
 	}
 }
