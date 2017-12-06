@@ -9,6 +9,7 @@ import java.io.IOException;
 import java.io.Writer;
 import java.nio.file.DirectoryStream;
 import java.util.function.Function;
+import java.util.function.Predicate;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
@@ -45,8 +46,8 @@ public class Controler {
 
 	Validator[] validators = new Validator[]{
 			this::validateCell1,
-			this::validateCell1,
-			this::validateCell1,
+			this::validateCell2
+
 	};
 
 	@FXML
@@ -136,18 +137,19 @@ public class Controler {
 						for (String value: set) {
 							j++;
 						int i = CellReference.convertColStringToIndex(value);
-System.out.println(j+ " coś tam " + i);
+//System.out.println(j+ " coś tam " + i);
 							cell = row.getCell(i);
-							boolean apply = validators[i].apply(cell);
-							if(cell.getStringCellValue().length()==5){
-							System.out.println("kolumn index ");
+							//System.out.println(" validator " + validators[0] + " j " + j + " i " + i);
+							boolean apply = validators[i].test(cell);
+							if(apply){
 							}
+
 						if (cell.getCellTypeEnum() == CellType.STRING) {
-							System.out.print(cell.getStringCellValue() + "\t");
+							//System.out.print(cell.getStringCellValue() + "\t");
 
 							writer.write("" + String.valueOf(cell.getStringCellValue()));
 						} else if (cell.getCellTypeEnum() == CellType.NUMERIC) {
-							System.out.print(cell.getNumericCellValue() + "\t");
+							//System.out.print(cell.getNumericCellValue() + "\t");
 							writer.write("" + String.valueOf(cell.getNumericCellValue()));
 						}
 						writer.write("*");
@@ -157,7 +159,7 @@ System.out.println(j+ " coś tam " + i);
 						writer.write("\r\n");
 						break;
 					}
-					System.out.println("");
+				//	System.out.println("");
 				}
 				file.close();
 			}
@@ -174,24 +176,35 @@ System.out.println(j+ " coś tam " + i);
 			}
 		}
 	}
-	
-	
-	
-	//nowa metoda z validacją 
+
+
+
+	//nowa metoda z validacją
 	public boolean validateCell1(Cell cell){
 
-			if(cell.getStringCellValue().length()==5 && (cell.getCellTypeEnum()== CellType.STRING || cell.getCellTypeEnum() == CellType.NUMERIC))
+			if(cell.getStringCellValue().length()==7 && (cell.getCellTypeEnum()== CellType.STRING || cell.getCellTypeEnum() == CellType.NUMERIC))
 					{
-				System.out.println("POPRAWNA WARTOŚ");
+				System.out.print("  POPRAWNA WARTOŚ  ");
 				return true;
 				}
 		return false;
-				
-			
-
 	}
 
-	interface Validator extends Function<Cell, Boolean> {
+	public boolean validateCell2(Cell cell){
+
+		System.out.println( "validator drugi validuje " + cell.getAddress());
+		if(cell.getStringCellValue().length()==3 && (cell.getCellTypeEnum()== CellType.STRING || cell.getCellTypeEnum() == CellType.NUMERIC))
+				{
+			System.out.print("  jest ok  ");
+			return true;
+			}
+	return false;
+
+
+
+}
+
+	interface Validator extends Predicate<Cell> {
 
 	}
 }
